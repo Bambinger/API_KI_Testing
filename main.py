@@ -1,9 +1,9 @@
 import os
 import openai
 import numpy as np
+import API_Key_current
 
-
-openai.api_key = "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"
+openai.api_key = API_Key_current.current_key()
 
 
 string = '''
@@ -16,9 +16,10 @@ string = '''
 ### A query to list the names of the departments which employed more than 10 employees in the last 3 months
 SELECT'''
 
+engine_current = "text-davinci-002"
 
 response = openai.Completion.create(
-    engine="text-davinci-002",
+    engine=engine_current,
     prompt=string,
     temperature=0,
     max_tokens=150,
@@ -28,7 +29,7 @@ response = openai.Completion.create(
     stop=["#", ";"]
 )
 
-text_file = open("ada_output.txt", "w")
+text_file = open(engine_current+".txt", "w")
 
 text_file.write(response.choices[0].text)
 text_file.close()
